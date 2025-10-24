@@ -47,22 +47,24 @@ def login():
         return redirect(url_for('dashboard'))
     form = LoginForm()
     if form.validate_on_submit():
-        # Only allow login for the specific "ismail" account
-        if form.email.data == 'ismail@example.com' and form.password.data == 'sigma':
+        # Only allow login for the "ismail" account
+        if form.email.data == 'ismail@example.com':
             user = User.query.filter_by(email='ismail@example.com').first()
-            if user:
+            if user and user.check_password(form.password.data):  # Proper hashed password check
                 login_user(user)
+                flash('Login successful!')
                 return redirect(url_for('dashboard'))
             else:
-                flash('Account not found. Please contact admin.')
+                flash('Invalid password for ismail@example.com.')
         else:
-            flash('Invalid email or password.')
+            flash('Only ismail@example.com is allowed to log in.')
     return render_template('login.html', form=form)
 
 @app.route('/logout')
 @login_required
 def logout():
     logout_user()
+    flash('Logged out successfully.')
     return redirect(url_for('home'))
 
 @app.route('/dashboard')
