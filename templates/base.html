@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Flask App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  <!-- Add this line -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <nav>
@@ -16,15 +16,20 @@
             <a href="{{ url_for('login') }}">Login</a>
         {% endif %}
     </nav>
-    <div class="content">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <p class="flash">{{ message }}</p>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
-        {% block content %}{% endblock %}
+
+    <div class="content" style="height: 90vh; display: table; width: 100%;">
+        <div style="display: table-cell; vertical-align: middle; text-align: center;">
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="flash">{{ message }}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <h1>Welcome to the Hashi Website</h1>
+        </div>
     </div>
+
 </body>
 </html>
