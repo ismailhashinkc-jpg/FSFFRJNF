@@ -14,7 +14,8 @@ db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 csrf = CSRFProtect(app)
-limiter = Limiter(app, key_func=get_remote_address)
+limiter = Limiter(key_func=get_remote_address)  # Updated: Removed 'app' from here
+limiter.init_app(app)  # Added: Initialize limiter with the app
 
 @login_manager.user_loader
 def load_user(user_id):
