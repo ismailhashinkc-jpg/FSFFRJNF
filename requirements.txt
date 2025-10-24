@@ -5,4 +5,5 @@ Flask-Login==0.6.3
 Flask-SQLAlchemy==3.0.5
 bcrypt==4.0.1
 gunicorn==21.2.0
-psycopg2-binary==2.9.7  # Add this for PostgreSQL
+psycopg2-binary==2.9.7
+Werkzeug==2.3.7  # Add this line to force an older, compatible Werkzeug version
