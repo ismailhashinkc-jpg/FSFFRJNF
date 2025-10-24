@@ -14,8 +14,8 @@ db.init_app(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 csrf = CSRFProtect(app)
-limiter = Limiter(key_func=get_remote_address)  # Updated: Removed 'app' from here
-limiter.init_app(app)  # Added: Initialize limiter with the app
+limiter = Limiter(key_func=get_remote_address)
+limiter.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -23,7 +23,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template('base.html')
+    return render_template('home.html')  # Updated to render a dedicated home template
 
 @app.route('/register', methods=['GET', 'POST'])
 @limiter.limit("5 per minute")
@@ -69,4 +69,11 @@ def dashboard():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+        # Add default user if not exists
+        if not User.query.filter_by(username='ismail').first():
+            default_user = User(username='ismail', email='ismail@example.com')
+            default_user.set_password('sigma')
+            db.session.add(default_user)
+            db.session.commit()
+            print("Default user 'ismail' with password 'sigma' created.")
     app.run(debug=True)
