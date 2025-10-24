@@ -2,4 +2,17 @@
 {% block content %}
 <h2>Dashboard</h2>
 <p>Welcome, {{ user.username }}!</p>
+
+<!-- Custom Buttons for Adding Things -->
+<div style="margin-top: 20px;">
+    <button onclick="alert('Add Post feature coming soon!')">Add Post</button>
+    <button onclick="alert('Add Item feature coming soon!')">Add Item</button>
+    <button onclick="alert('Add Custom Thing feature coming soon!')">Add Custom Thing</button>
+</div>
+
+<!-- Example: List of added items (placeholder) -->
+<h3>Your Added Items:</h3>
+<ul>
+    <li>No items yet. Click a button above to add!</li>
+</ul>
 {% endblock %}
