@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Flask App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  <!-- Add this line -->
 </head>
 <body>
     <nav>
@@ -16,6 +17,13 @@
         {% endif %}
     </nav>
     <div class="content">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p class="flash">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
         {% block content %}{% endblock %}
     </div>
 </body>
