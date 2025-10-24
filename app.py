@@ -23,7 +23,7 @@ def load_user(user_id):
 
 @app.route('/')
 def home():
-    return render_template('home.html')  # Updated to render a dedicated home template
+    return render_template('home.html')
 
 @app.route('/register', methods=['GET', 'POST'])
 @limiter.limit("5 per minute")
@@ -47,11 +47,16 @@ def login():
         return redirect(url_for('dashboard'))
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_password(form.password.data):
-            login_user(user)
-            return redirect(url_for('dashboard'))
-        flash('Invalid email or password.')
+        # Only allow login for the specific "ismail" account
+        if form.email.data == 'ismail@example.com' and form.password.data == 'sigma':
+            user = User.query.filter_by(email='ismail@example.com').first()
+            if user:
+                login_user(user)
+                return redirect(url_for('dashboard'))
+            else:
+                flash('Account not found. Please contact admin.')
+        else:
+            flash('Invalid email or password.')
     return render_template('login.html', form=form)
 
 @app.route('/logout')
